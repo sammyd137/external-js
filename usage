@@ -17,6 +17,6 @@ git log -1
 npm run concat:js_1
 npx webpack ./dist/js/scripts.js
 git add .
-git commit -m "v1.01.05 - get full contract details and reflect on page"
-git push origin master 
+git commit -m "v1.01.06 - network connection"
+git push origin main 
 git log -1

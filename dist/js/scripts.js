@@ -735,7 +735,7 @@ const abi = [
   ]
 const { ethers } = require("ethers");
 
-console.log("You ran an external JS file v1.01.05");
+console.log("You ran an external JS file v1.01.06");
 
 /* Functions Start */
 const checkNetwork = async () => {
@@ -744,6 +744,14 @@ const checkNetwork = async () => {
         if (ethereum) {
             console.log("Connected Network:", ethereum.networkVersion);
             window["network"] = ethereum.networkVersion;
+            const element = (
+                window["network"] === "1" ? "Mainnet, please connect to Rinkeby" :
+                window["network"] === "3" ? "Ropsten, please connect to Rinkeby" :
+                window["network"] === "4" ? "Rinkeby" :
+                window["network"] === "5" ? "Goerli, please connect to Rinkeby" : 
+                "No network, please connect to Rinkeby"
+            )
+            document.getElementById("network-message").innerHTML = element
         }
     } catch (error) {
         console.log(error);
@@ -879,7 +887,7 @@ const mint = async () => {
                 value: ethers.utils.parseEther(
                     (window["amount"] * parseFloat(window["cost"])).toString()
                 ),
-                gasLimit: state["amount"] * 200000,
+                gasLimit: window["amount"] * 200000,
             });
             await mintTxn.wait();
             console.log("Mint transaction: ", mintTxn);
