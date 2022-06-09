@@ -17,6 +17,6 @@ git log -1
 npm run concat:js_1
 npx webpack ./dist/js/scripts.js
 git add .
-git commit -m "v1.01.06 - network connection"
+git commit -m "v1.01.07 - alert on successful mint"
 git push origin main 
 git log -1

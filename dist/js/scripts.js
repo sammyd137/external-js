@@ -735,7 +735,7 @@ const abi = [
   ]
 const { ethers } = require("ethers");
 
-console.log("You ran an external JS file v1.01.06");
+console.log("You ran an external JS file v1.01.07");
 
 /* Functions Start */
 const checkNetwork = async () => {
@@ -892,6 +892,7 @@ const mint = async () => {
             await mintTxn.wait();
             console.log("Mint transaction: ", mintTxn);
             await getTotalMinted();
+            alert(`Congratulations! You just minted ${window["amount"]} NFTs`)
         }
     } catch (error) {
         console.log("Minting transaction erorr", error);
