@@ -1,0 +1,8 @@
+// to concat ExternalJS.js and ExternalVars.js
+npm run concat:js
+
+// to concat ExternalJS-1.js and ExternalVars.js
+npm run concat:js_1
+
+// to compile dist/js/scripts.js to dist/main.js file
+npx webpack ./dist/js/scripts.js ./dist/output/final.js
