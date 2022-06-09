@@ -69,15 +69,42 @@ const connectWallet = async () => {
 };
 
 const attachConnectWalletButton = () => {
-    // const element = `
-    // <button class="cta-button connect-wallet-button" id="connect-wallet-button">
-    //     Connect Wallet
-    // </button>
-    // `;
-    // document.getElementById("connect-wallet-container").innerHTML = element;
     document
         .getElementById("connect-wallet-button")
         .addEventListener("click", connectWallet);
+};
+
+const connectContract = async () => {
+    const { ethereum } = window;
+    if (ethereum) {
+        if (state["account"] !== null) {
+            const provider = new ethers.providers.Web3Provider(ethereum);
+            const signer = provider.getSigner();
+            const mintingContract = new ethers.Contract(ADDRESS, abi, signer);
+            console.log("Connected to contract:", mintingContract.address);
+            window["contract"] = mintingContract;
+
+            // insert into DOM
+            const element = `
+                ${state["contract"].address.substring(0, 5)}...${state[
+                "contract"
+            ].address.substring(
+                state["contract"].address.length - 5,
+                state["contract"].address.length
+            )} Contract Connected 
+            `;
+            document.getElementById("connected-contract-div").innerHTML =
+                element;
+        } else {
+            const element = `
+                No Contract Connected 
+            `;
+            document.getElementById("connected-contract-div").innerHTML =
+                element;
+        }
+    } else {
+        console.log("Ethereum object not found");
+    }
 };
 /* Functions End */
 
@@ -98,14 +125,12 @@ window.addEventListener("load", async () => {
     // on first load check if there is already a connected account / contract
     await checkNetwork();
     await checkConnection();
-    // await connectContract();
+    await connectContract();
 
     // attach function to connect wallet button
     if (!window.account) {
         console.log("Attaching connect wallet function...")
         attachConnectWalletButton();
-    } else {
-
     }
 
 });

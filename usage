@@ -6,3 +6,9 @@ npm run concat:js_1
 
 // to compile dist/js/scripts.js to dist/main.js file
 npx webpack ./dist/js/scripts.js ./dist/output/final.js
+
+// to see latest git push (and get commit hash)
+git log -1
+
+// sample script tag in hmtl
+<script src="https://cdn.jsdelivr.net/gh/samdarmali/external-js-test@d4ff52a1fb4ba59f9b69dc5cbe880d07203e27ff/dist/main.js"></script>
