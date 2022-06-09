@@ -173,14 +173,15 @@ window.addEventListener("load", async () => {
     // on first load check if there is already a connected account / contract
     await checkNetwork();
     await checkConnection();
-    await connectContract();
-
+    
     // attach function to connect wallet button
     if (!window["account"]) {
         console.log("Attaching connect wallet function...");
         attachConnectWalletButton();
     }
-
+    
+    await connectContract();
+    
     // attach contract details to mint section
     // if (window["contract"]) {
     //     await getTotalMinted();
