@@ -1,6 +1,6 @@
 const { ethers } = require("ethers");
 
-console.log("You ran an external JS file v1.01.03");
+console.log("You ran an external JS file v1.01.04");
 
 /* Functions Start */
 const checkNetwork = async () => {
@@ -111,7 +111,12 @@ const connectContract = async () => {
 const getTotalMinted = async () => {
     const _totalMinted = await window["contract"].getCurrentSupply();
     window["totalMinted"] = _totalMinted.toNumber();
+    document.getElementById("total-minted").innerHTML = window["totalMinted"]
 };
+
+// const attachTotalMintedListener = () => {
+//     document.getElementById("total-minted").addEventListener("change")
+// }
 
 const getTotalSupply = async () => {
     const _totalSupply = await window["contract"].maxSupply();
@@ -170,7 +175,7 @@ window.addEventListener("load", async () => {
         });
     }
 
-    // on first load check if there is already a connected account / contract
+    // check network and account
     await checkNetwork();
     await checkConnection();
     
@@ -180,20 +185,21 @@ window.addEventListener("load", async () => {
         attachConnectWalletButton();
     }
     
+    // connect to contract
     await connectContract();
-    
+
     // attach contract details to mint section
-    // if (window["contract"]) {
-    //     await getTotalMinted();
-    //     await getTotalSupply();
-    //     await getCost();
+    if (window["contract"]) {
+        await getTotalMinted();
+        await getTotalSupply();
+        await getCost();
 
-    //     // add event listener to the input section
-    //     attachInputListener();
+        // add event listener to the input section
+        attachInputListener();
 
-    //     // add event listener to mint button
-    //     attachMintListener();
-    // }
+        // add event listener to mint button
+        attachMintListener();
+    }
 });
 
 /* Event Listeners End */
