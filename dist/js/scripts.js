@@ -735,7 +735,7 @@ const abi = [
   ]
 const { ethers } = require("ethers");
 
-console.log("You ran an external JS file v1.01.01");
+console.log("You ran an external JS file v1.01.02");
 
 /* Functions Start */
 const checkNetwork = async () => {
@@ -771,7 +771,7 @@ const checkConnection = async () => {
                 account.length
             )} Wallet Connected 
             `;
-            // document.getElementById("connected-wallet-div").innerHTML = element;
+            document.getElementById("connect-wallet-button").innerHTML = element;
         } else {
             console.log("No authorized account found");
             window["account"] = null;
@@ -839,6 +839,8 @@ window.addEventListener("load", async () => {
     if (!window.account) {
         console.log("Attaching connect wallet function...")
         attachConnectWalletButton();
+    } else {
+
     }
 
 });
