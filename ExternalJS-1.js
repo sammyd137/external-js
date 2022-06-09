@@ -1,6 +1,6 @@
 const { ethers } = require("ethers");
 
-console.log("You ran an external JS file v1.01.07");
+console.log("You ran an external JS file v1.01.08");
 
 /* Functions Start */
 const checkNetwork = async () => {
@@ -9,14 +9,17 @@ const checkNetwork = async () => {
         if (ethereum) {
             console.log("Connected Network:", ethereum.networkVersion);
             window["network"] = ethereum.networkVersion;
-            const element = (
-                window["network"] === "1" ? "Mainnet, please connect to Rinkeby" :
-                window["network"] === "3" ? "Ropsten, please connect to Rinkeby" :
-                window["network"] === "4" ? "Rinkeby" :
-                window["network"] === "5" ? "Goerli, please connect to Rinkeby" : 
-                "No network, please connect to Rinkeby"
-            )
-            document.getElementById("network-message").innerHTML = element
+            const element =
+                window["network"] === "1"
+                    ? "Mainnet, please connect to Rinkeby"
+                    : window["network"] === "3"
+                    ? "Ropsten, please connect to Rinkeby"
+                    : window["network"] === "4"
+                    ? "Rinkeby"
+                    : window["network"] === "5"
+                    ? "Goerli, please connect to Rinkeby"
+                    : "No network, please connect to Rinkeby";
+            document.getElementById("network-message").innerHTML = element;
         }
     } catch (error) {
         console.log(error);
@@ -102,14 +105,12 @@ const connectContract = async () => {
                 window["contract"].address.length
             )} Contract Connected 
             `;
-            document.getElementById("connected-contract-p").innerHTML =
-                element;
+            document.getElementById("connected-contract-p").innerHTML = element;
         } else {
             const element = `
                 No Contract Connected 
             `;
-            document.getElementById("connected-contract-p").innerHTML =
-                element;
+            document.getElementById("connected-contract-p").innerHTML = element;
         }
     } else {
         console.log("Ethereum object not found");
@@ -119,20 +120,26 @@ const connectContract = async () => {
 const getTotalMinted = async () => {
     const _totalMinted = await window["contract"].getCurrentSupply();
     window["totalMinted"] = _totalMinted.toNumber();
-    document.getElementById("total-minted").innerHTML = window["totalMinted"]
+    document.getElementById("total-minted").innerHTML = window["totalMinted"];
 };
 
 const getTotalSupply = async () => {
     const _totalSupply = await window["contract"].maxSupply();
     window["totalSupply"] = _totalSupply.toNumber();
-    document.getElementById("total-supply").innerHTML = window["totalSupply"]
+    document.getElementById("total-supply").innerHTML = window["totalSupply"];
 };
 
 const getCost = async () => {
     const _cost = await window["contract"].cost();
     window["cost"] = ethers.utils.formatEther(_cost);
-    document.getElementById("mint-cost").innerHTML = window["cost"]
+    document.getElementById("mint-cost").innerHTML = window["cost"];
 };
+
+const getMaxMintAmount = async () => {
+    const _maxMint = await window["contract"].maxMintAmount()
+    window["maxMint"] = _maxMint.toNumber();
+    document.getElementById("max-mint").innerHTML = window["maxMint"];
+}
 
 const updateAmt = (event) => {
     window["amount"] = parseInt(event.target.value);
@@ -146,6 +153,12 @@ const attachInputListener = () => {
 
 const mint = async () => {
     try {
+
+        if (window["amount"] < 1 || window["amount"] > window["maxMint"]) {
+            alert("You are trying to mint an invalid amount of NFTs")
+            return
+        }
+
         if (window["contract"]) {
             console.log(`Minting ${window["amount"]}`);
             const mintTxn = await window["contract"].mint(window["amount"], {
@@ -157,10 +170,11 @@ const mint = async () => {
             await mintTxn.wait();
             console.log("Mint transaction: ", mintTxn);
             await getTotalMinted();
-            alert(`Congratulations! You just minted ${window["amount"]} NFTs`)
+            alert(`Congratulations! You just minted ${window["amount"]} NFTs`);
         }
     } catch (error) {
-        console.log("Minting transaction erorr", error);
+        console.log("Minting erorr", error);
+        alert("Minting erorr", error)
     }
 };
 
@@ -185,13 +199,13 @@ window.addEventListener("load", async () => {
     // check network and account
     await checkNetwork();
     await checkConnection();
-    
+
     // attach function to connect wallet button
     if (!window["account"]) {
         console.log("Attaching connect wallet function...");
         attachConnectWalletButton();
     }
-    
+
     // connect to contract
     await connectContract();
 
@@ -200,6 +214,7 @@ window.addEventListener("load", async () => {
         await getTotalMinted();
         await getTotalSupply();
         await getCost();
+        await getMaxMintAmount();
 
         // add event listener to the input section
         attachInputListener();
