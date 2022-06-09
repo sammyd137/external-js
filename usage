@@ -12,3 +12,11 @@ git log -1
 
 // sample script tag in hmtl
 <script src="https://cdn.jsdelivr.net/gh/samdarmali/external-js-test@d4ff52a1fb4ba59f9b69dc5cbe880d07203e27ff/dist/main.js"></script>
+
+// run all
+npm run concat:js_1
+npx webpack ./dist/js/scripts.js
+git add .
+git commit -m "v1.01.05 - get full contract details and reflect on page"
+git push origin master 
+git log -1

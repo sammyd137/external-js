@@ -735,7 +735,7 @@ const abi = [
   ]
 const { ethers } = require("ethers");
 
-console.log("You ran an external JS file v1.01.03");
+console.log("You ran an external JS file v1.01.05");
 
 /* Functions Start */
 const checkNetwork = async () => {
@@ -849,18 +849,16 @@ const getTotalMinted = async () => {
     document.getElementById("total-minted").innerHTML = window["totalMinted"]
 };
 
-// const attachTotalMintedListener = () => {
-//     document.getElementById("total-minted").addEventListener("change")
-// }
-
 const getTotalSupply = async () => {
     const _totalSupply = await window["contract"].maxSupply();
     window["totalSupply"] = _totalSupply.toNumber();
+    document.getElementById("total-supply").innerHTML = window["totalSupply"]
 };
 
 const getCost = async () => {
     const _cost = await window["contract"].cost();
     window["cost"] = ethers.utils.formatEther(_cost);
+    document.getElementById("mint-cost").innerHTML = window["cost"]
 };
 
 const updateAmt = (event) => {
