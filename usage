@@ -22,8 +22,8 @@ git push origin main
 git log -1
 
 // run all (updated)
-npx webpack ./ExternalJS-1.js -o ./dist/output/writers-corner
+npx webpack ./ExternalJS-1.js -o ./dist/output/mint-test
 git add .
-git commit -m "v1.01.09 - total supply function change"
+git commit -m "v1.01.10 - new contract for mint test"
 git push origin main 
 git log -1

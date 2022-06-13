@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
-const { ADDRESS, ABI } = require("./constants/writers-corner-constants");
+const { ADDRESS, ABI } = require("./constants/mint-test");
 
-console.log("You ran an external JS file v1.01.09");
+console.log("You ran an external JS file v1.01.10");
 console.log("Imported address:", ADDRESS)
 
 /* Functions Start */
