@@ -120,7 +120,7 @@ const connectContract = async () => {
 };
 
 const getTotalMinted = async () => {
-    const _totalMinted = await window["contract"].getCurrentSupply();
+    const _totalMinted = await window["contract"].totalSupply();
     window["totalMinted"] = _totalMinted.toNumber();
     document.getElementById("total-minted").innerHTML = window["totalMinted"];
 };
