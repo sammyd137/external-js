@@ -1,6 +1,6 @@
 const ADDRESS = "0xde3762aCD9ADC4Dd8AaE1E4Ec128fC4E536027Ca"
 
-const abi = [
+const ABI = [
     {
       "inputs": [
         {

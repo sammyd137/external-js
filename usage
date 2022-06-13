@@ -5,7 +5,7 @@ npm run concat:js
 npm run concat:js_1
 
 // to compile dist/js/scripts.js to dist/main.js file
-npx webpack ./dist/js/scripts.js ./dist/output/final.js
+npx webpack ./dist/js/scripts.js -o ./dist/output/sample-page
 
 // to see latest git push (and get commit hash)
 git log -1
@@ -15,8 +15,15 @@ git log -1
 
 // run all
 npm run concat:js_1
-npx webpack ./dist/js/scripts.js
+npx webpack ./dist/js/scripts.js -o ./dist/output/sample-page
 git add .
-git commit -m "v1.01.07 - alert on successful mint"
+git commit -m "v1.01.08 - handle error for minting an invalid number of tokens"
+git push origin main 
+git log -1
+
+// run all (updated)
+npx webpack ./ExternalJS-1.js -o ./dist/output/writers-corner
+git add .
+git commit -m "v1.01.09 - new folder structure for output. no longer need to use concat. testing for writers corner."
 git push origin main 
 git log -1

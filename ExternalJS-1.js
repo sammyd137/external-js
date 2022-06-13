@@ -1,6 +1,8 @@
 const { ethers } = require("ethers");
+const { ADDRESS, ABI } = require("./constants/writers-corner-constants");
 
-console.log("You ran an external JS file v1.01.08");
+console.log("You ran an external JS file v1.01.09");
+console.log("Imported address:", ADDRESS)
 
 /* Functions Start */
 const checkNetwork = async () => {
@@ -92,7 +94,7 @@ const connectContract = async () => {
         if (window["account"]) {
             const provider = new ethers.providers.Web3Provider(ethereum);
             const signer = provider.getSigner();
-            const mintingContract = new ethers.Contract(ADDRESS, abi, signer);
+            const mintingContract = new ethers.Contract(ADDRESS, ABI, signer);
             console.log("Connected to contract:", mintingContract.address);
             window["contract"] = mintingContract;
 
@@ -136,10 +138,10 @@ const getCost = async () => {
 };
 
 const getMaxMintAmount = async () => {
-    const _maxMint = await window["contract"].maxMintAmount()
+    const _maxMint = await window["contract"].maxMintAmount();
     window["maxMint"] = _maxMint.toNumber();
     document.getElementById("max-mint").innerHTML = window["maxMint"];
-}
+};
 
 const updateAmt = (event) => {
     window["amount"] = parseInt(event.target.value);
@@ -153,10 +155,9 @@ const attachInputListener = () => {
 
 const mint = async () => {
     try {
-
         if (window["amount"] < 1 || window["amount"] > window["maxMint"]) {
-            alert("You are trying to mint an invalid amount of NFTs")
-            return
+            alert("You are trying to mint an invalid amount of NFTs");
+            return;
         }
 
         if (window["contract"]) {
@@ -174,7 +175,7 @@ const mint = async () => {
         }
     } catch (error) {
         console.log("Minting erorr", error);
-        alert("Minting erorr", error)
+        alert("Minting erorr", error);
     }
 };
 
