@@ -13,16 +13,9 @@ git log -1
 // sample script tag in hmtl
 <script src="https://cdn.jsdelivr.net/gh/samdarmali/external-js-test@d4ff52a1fb4ba59f9b69dc5cbe880d07203e27ff/dist/main.js"></script>
 
-// run all
-npm run concat:js_1
-npx webpack ./dist/js/scripts.js -o ./dist/output/sample-page
-git add .
-git commit -m "v1.01.08 - handle error for minting an invalid number of tokens"
-git push origin main 
-git log -1
 
 // run all (updated)
-npx webpack ./ExternalJS-1.js -o ./dist/output/mint-test
+npx webpack ./script-uncompressed.js -o ./dist/output/mint-test
 git add .
 git commit -m "v1.01.10 - new contract for mint test"
 git push origin main 
