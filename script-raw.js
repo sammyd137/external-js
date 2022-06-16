@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ADDRESS, ABI } = require("./constants/writers-corner");
 
-console.log("You ran an external JS file v1.01.13");
+console.log("You ran an external JS file v1.01.14");
 console.log("Imported address:", ADDRESS);
 
 /* Functions Start */
@@ -70,7 +70,7 @@ const checkConnection = async () => {
                 ${account.substring(0, 5)}...${account.substring(
                 account.length - 5,
                 account.length
-            )} Connected 
+            )} Connected &#x1F44D
             `;
             document.getElementById("connect-wallet-button").innerHTML =
                 element;

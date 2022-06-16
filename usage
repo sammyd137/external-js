@@ -18,6 +18,6 @@ git log -1
 // run all - copy paste whole chunk into terminal
 npx webpack ./script-raw.js -o ./dist/output/writers-corner
 git add .
-git commit -m "v1.01.13 - Alert on incorrect network, remove from post html. test on writers corner"
+git commit -m "v1.01.14 - Emoji test. test on writers corner"
 git push origin main 
 git log -1
