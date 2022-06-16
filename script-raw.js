@@ -1,8 +1,8 @@
 const { ethers } = require("ethers");
-const { ADDRESS, ABI } = require("./constants/mint-test");
+const { ADDRESS, ABI } = require("./constants/writers-corner");
 
-console.log("You ran an external JS file v1.01.10");
-console.log("Imported address:", ADDRESS)
+console.log("You ran an external JS file v1.01.11");
+console.log("Imported address:", ADDRESS);
 
 /* Functions Start */
 const checkNetwork = async () => {
@@ -143,14 +143,28 @@ const getMaxMintAmount = async () => {
     document.getElementById("max-mint").innerHTML = window["maxMint"];
 };
 
+const getPaused = async () => {
+    const _paused = await window["contract"].paused();
+    window["paused"] = _paused;
+    if (window["paused"]) {
+        console.log("The contract is paused");
+    } else {
+        console.log("The contract is not paused");
+    }
+};
+
 const updateAmt = (event) => {
     window["amount"] = parseInt(event.target.value);
 };
 
-const attachInputListener = () => {
-    document
-        .getElementById("mint-amount-input")
-        .addEventListener("change", updateAmt);
+const attachInputListener = (mintPaused) => {
+    if (mintPaused) {
+        document.getElementById("mint-amount-input").disabled = true;
+    } else {
+        document
+            .getElementById("mint-amount-input")
+            .addEventListener("change", updateAmt);
+    }
 };
 
 const mint = async () => {
@@ -179,8 +193,12 @@ const mint = async () => {
     }
 };
 
-const attachMintListener = () => {
-    document.getElementById("mint-button").addEventListener("click", mint);
+const attachMintListener = (mintPaused) => {
+    if (mintPaused) {
+        document.getElementById("mint-button").innerHTML = "Paused";
+    } else {
+        document.getElementById("mint-button").addEventListener("click", mint);
+    }
 };
 /* Functions End */
 
@@ -216,12 +234,14 @@ window.addEventListener("load", async () => {
         await getTotalSupply();
         await getCost();
         await getMaxMintAmount();
-
+        await getPaused();
+        
         // add event listener to the input section
-        attachInputListener();
+        attachInputListener(window["paused"]);
 
         // add event listener to mint button
-        attachMintListener();
+        attachMintListener(window["paused"]);
+        
     }
 });
 

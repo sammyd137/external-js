@@ -14,9 +14,10 @@ git log -1
 <script src="https://cdn.jsdelivr.net/gh/samdarmali/external-js-test@d4ff52a1fb4ba59f9b69dc5cbe880d07203e27ff/dist/main.js"></script>
 
 
-// run all (updated)
-npx webpack ./script-uncompressed.js -o ./dist/output/mint-test
+
+// run all - copy paste whole chunk into terminal
+npx webpack ./script-raw.js -o ./dist/output/writers-corner
 git add .
-git commit -m "v1.01.10 - new contract for mint test"
+git commit -m "v1.01.11 - button inactive and input disabled on mint paused. test on writers corner"
 git push origin main 
 git log -1
