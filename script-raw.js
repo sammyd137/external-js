@@ -1,27 +1,50 @@
 const { ethers } = require("ethers");
 const { ADDRESS, ABI } = require("./constants/writers-corner");
 
-console.log("You ran an external JS file v1.01.11");
+console.log("You ran an external JS file v1.01.13");
 console.log("Imported address:", ADDRESS);
 
 /* Functions Start */
+const alertNetwork = (networkId, correctNetworkId) => {
+    const networks = {
+        1: "Mainnet",
+        3: "Ropsten",
+        4: "Rinkeby",
+        5: "Goerli",
+    };
+
+    if (networkId === correctNetworkId) {
+        console.log(
+            "You are connected to the right network:",
+            networks[network]
+        );
+    } else {
+        alert(
+            `You are connected to the wrong network - ${networks[network]}.\n Please connect to the right network: ${networks[correctNetworkId]}`
+        );
+    }
+};
+
 const checkNetwork = async () => {
     try {
         const { ethereum } = window;
         if (ethereum) {
             console.log("Connected Network:", ethereum.networkVersion);
             window["network"] = ethereum.networkVersion;
-            const element =
-                window["network"] === "1"
-                    ? "Mainnet, please connect to Rinkeby"
-                    : window["network"] === "3"
-                    ? "Ropsten, please connect to Rinkeby"
-                    : window["network"] === "4"
-                    ? "Rinkeby"
-                    : window["network"] === "5"
-                    ? "Goerli, please connect to Rinkeby"
-                    : "No network, please connect to Rinkeby";
-            document.getElementById("network-message").innerHTML = element;
+            // const element =
+            //     window["network"] === "1"
+            //         ? "Mainnet, please connect to Rinkeby"
+            //         : window["network"] === "3"
+            //         ? "Ropsten, please connect to Rinkeby"
+            //         : window["network"] === "4"
+            //         ? "Rinkeby"
+            //         : window["network"] === "5"
+            //         ? "Goerli, please connect to Rinkeby"
+            //         : "No network, please connect to Rinkeby";
+            // document.getElementById("network-message").innerHTML = element;
+
+            // alert user if they are connected to the wrong network
+            alertNetwork(window["network"], "4");
         }
     } catch (error) {
         console.log(error);
@@ -47,7 +70,7 @@ const checkConnection = async () => {
                 ${account.substring(0, 5)}...${account.substring(
                 account.length - 5,
                 account.length
-            )} Wallet Connected 
+            )} Connected 
             `;
             document.getElementById("connect-wallet-button").innerHTML =
                 element;
@@ -99,20 +122,21 @@ const connectContract = async () => {
             window["contract"] = mintingContract;
 
             // insert into DOM
-            const element = `
-                ${window["contract"].address.substring(0, 5)}...${window[
-                "contract"
-            ].address.substring(
-                window["contract"].address.length - 5,
-                window["contract"].address.length
-            )} Contract Connected 
-            `;
-            document.getElementById("connected-contract-p").innerHTML = element;
+            // const element = `
+            //     ${window["contract"].address.substring(0, 5)}...${window[
+            //     "contract"
+            // ].address.substring(
+            //     window["contract"].address.length - 5,
+            //     window["contract"].address.length
+            // )} Contract Connected
+            // `;
+            // document.getElementById("connected-contract-p").innerHTML = element;
         } else {
-            const element = `
-                No Contract Connected 
-            `;
-            document.getElementById("connected-contract-p").innerHTML = element;
+            window["contract"] = null;
+            // const element = `
+            //     No Contract Connected
+            // `;
+            // document.getElementById("connected-contract-p").innerHTML = element;
         }
     } else {
         console.log("Ethereum object not found");
@@ -235,13 +259,12 @@ window.addEventListener("load", async () => {
         await getCost();
         await getMaxMintAmount();
         await getPaused();
-        
+
         // add event listener to the input section
         attachInputListener(window["paused"]);
 
         // add event listener to mint button
         attachMintListener(window["paused"]);
-        
     }
 });
 
