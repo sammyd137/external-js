@@ -1,16 +1,18 @@
 const { ethers } = require("ethers");
-const { ADDRESS, ABI } = require("./constants/writers-corner");
+const { ADDRESS, ABI } = require("./constants/writers-dorm-matic-test");
 
-console.log("You ran an external JS file v1.01.14");
+console.log("You ran an external JS file v1.01.15");
 console.log("Imported address:", ADDRESS);
 
 /* Functions Start */
 const alertNetwork = (networkId, correctNetworkId) => {
     const networks = {
-        1: "Mainnet",
+        1: "Ethereum Mainnet",
         3: "Ropsten",
         4: "Rinkeby",
         5: "Goerli",
+        137: "Matic Mainnet",
+        80001: "Mumbai"
     };
 
     if (networkId === correctNetworkId) {
@@ -44,7 +46,7 @@ const checkNetwork = async () => {
             // document.getElementById("network-message").innerHTML = element;
 
             // alert user if they are connected to the wrong network
-            alertNetwork(window["network"], "4");
+            alertNetwork(window["network"], "80001");
         }
     } catch (error) {
         console.log(error);

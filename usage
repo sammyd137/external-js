@@ -16,8 +16,8 @@ git log -1
 
 
 // run all - copy paste whole chunk into terminal
-npx webpack ./script-raw.js -o ./dist/output/writers-corner
+npx webpack ./script-raw.js -o ./dist/output/writers-dorm-matic-test
 git add .
-git commit -m "v1.01.14 - Emoji test. test on writers corner"
+git commit -m "v1.01.15 - Matic test"
 git push origin main 
 git log -1
