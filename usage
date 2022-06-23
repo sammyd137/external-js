@@ -16,8 +16,8 @@ git log -1
 
 
 // run all - copy paste whole chunk into terminal
-npx webpack ./script-raw.js -o ./dist/output/writers-dorm-matic-test
+npx webpack ./script-raw.js -o ./dist/output/writers-dorm-matic-live
 git add .
-git commit -m "v1.01.15 - Matic test"
+git commit -m "v1.01.16 - Matic live"
 git push origin main 
 git log -1

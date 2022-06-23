@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
-const { ADDRESS, ABI } = require("./constants/writers-dorm-matic-test");
+const { ADDRESS, ABI } = require("./constants/writers-dorm-matic-live");
 
-console.log("You ran an external JS file v1.01.15");
+console.log("You ran an external JS file v1.01.16");
 console.log("Imported address:", ADDRESS);
 
 /* Functions Start */
@@ -27,7 +27,7 @@ const alertNetwork = (networkId, correctNetworkId) => {
     }
 };
 
-const checkNetwork = async () => {
+const checkNetwork = async (correctNetworkId) => {
     try {
         const { ethereum } = window;
         if (ethereum) {
@@ -46,7 +46,7 @@ const checkNetwork = async () => {
             // document.getElementById("network-message").innerHTML = element;
 
             // alert user if they are connected to the wrong network
-            alertNetwork(window["network"], "80001");
+            alertNetwork(window["network"], correctNetworkId);
         }
     } catch (error) {
         console.log(error);
@@ -242,7 +242,7 @@ window.addEventListener("load", async () => {
     }
 
     // check network and account
-    await checkNetwork();
+    await checkNetwork("137");
     await checkConnection();
 
     // attach function to connect wallet button
