@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ADDRESS, ABI } = require("./constants/writers-dorm-matic-live");
 
-console.log("You ran an external JS file v1.01.16");
+console.log("You ran an external JS file v1.01.17");
 console.log("Imported address:", ADDRESS);
 
 /* Functions Start */
@@ -183,8 +183,8 @@ const updateAmt = (event) => {
     window["amount"] = parseInt(event.target.value);
 };
 
-const attachInputListener = (mintPaused) => {
-    if (mintPaused) {
+const attachInputListener = (mintPaused, correctNetwork) => {
+    if (mintPaused || window["network"] !== correctNetwork) {
         document.getElementById("mint-amount-input").disabled = true;
     } else {
         document
@@ -219,10 +219,21 @@ const mint = async () => {
     }
 };
 
-const attachMintListener = (mintPaused) => {
+const attachMintListener = (mintPaused, correctNetwork) => {
     if (mintPaused) {
-        document.getElementById("mint-button").innerHTML = "Paused";
+        // Disable the mint button with paused
+        let mintButton = document.getElementById("mint-button").firstChild
+        mintButton.classList.remove("has-vivid-green-cyan-color");
+        mintButton.classList.add("has-cyan-bluish-gray-color");
+        mintButton.innerHTML = "Paused";
+    } else if (window["network"] !== correctNetwork) {
+        // Disable the mint button with incorrect network
+        let mintButton = document.getElementById("mint-button").firstChild
+        mintButton.classList.remove("has-vivid-green-cyan-color");
+        mintButton.classList.add("has-cyan-bluish-gray-color");
+        mintButton.innerHTML = "Incorrect Network";
     } else {
+        // Attach mint listener
         document.getElementById("mint-button").addEventListener("click", mint);
     }
 };
@@ -241,8 +252,10 @@ window.addEventListener("load", async () => {
         });
     }
 
+    const correctNetwork = "137"
+
     // check network and account
-    await checkNetwork("137");
+    await checkNetwork(correctNetwork);
     await checkConnection();
 
     // attach function to connect wallet button
@@ -250,24 +263,25 @@ window.addEventListener("load", async () => {
         console.log("Attaching connect wallet function...");
         attachConnectWalletButton();
     }
-
-    // connect to contract
-    await connectContract();
-
+    
     // attach contract details to mint section
-    if (window["contract"]) {
+    if (window["network"] === correctNetwork) {
+        // connect to contract
+        await connectContract();
+
+        // get contract details
         await getTotalMinted();
         await getTotalSupply();
         await getCost();
         await getMaxMintAmount();
         await getPaused();
 
-        // add event listener to the input section
-        attachInputListener(window["paused"]);
-
-        // add event listener to mint button
-        attachMintListener(window["paused"]);
     }
+    // add event listener to the input section
+    attachInputListener(window["paused"], correctNetwork);
+
+    // add event listener to mint button
+    attachMintListener(window["paused"], correctNetwork);
 });
 
 /* Event Listeners End */

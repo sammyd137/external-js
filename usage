@@ -18,6 +18,6 @@ git log -1
 // run all - copy paste whole chunk into terminal
 npx webpack ./script-raw.js -o ./dist/output/writers-dorm-matic-live
 git add .
-git commit -m "v1.01.16 - Matic live"
+git commit -m "v1.01.17 - Mint button and input error handling"
 git push origin main 
 git log -1
