@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
-const { ADDRESS, ABI } = require("./constants/writers-dorm-matic-live");
+const { ADDRESS, ABI } = require("./constants/emotionless-fusionfall-fanfiction");
 
-console.log("You ran an external JS file v1.01.17");
+console.log("You ran an external JS file v1.01.18");
 console.log("Imported address:", ADDRESS);
 
 /* Functions Start */
@@ -33,18 +33,6 @@ const checkNetwork = async (correctNetworkId) => {
         if (ethereum) {
             console.log("Connected Network:", ethereum.networkVersion);
             window["network"] = ethereum.networkVersion;
-            // const element =
-            //     window["network"] === "1"
-            //         ? "Mainnet, please connect to Rinkeby"
-            //         : window["network"] === "3"
-            //         ? "Ropsten, please connect to Rinkeby"
-            //         : window["network"] === "4"
-            //         ? "Rinkeby"
-            //         : window["network"] === "5"
-            //         ? "Goerli, please connect to Rinkeby"
-            //         : "No network, please connect to Rinkeby";
-            // document.getElementById("network-message").innerHTML = element;
-
             // alert user if they are connected to the wrong network
             alertNetwork(window["network"], correctNetworkId);
         }
@@ -122,23 +110,8 @@ const connectContract = async () => {
             const mintingContract = new ethers.Contract(ADDRESS, ABI, signer);
             console.log("Connected to contract:", mintingContract.address);
             window["contract"] = mintingContract;
-
-            // insert into DOM
-            // const element = `
-            //     ${window["contract"].address.substring(0, 5)}...${window[
-            //     "contract"
-            // ].address.substring(
-            //     window["contract"].address.length - 5,
-            //     window["contract"].address.length
-            // )} Contract Connected
-            // `;
-            // document.getElementById("connected-contract-p").innerHTML = element;
         } else {
             window["contract"] = null;
-            // const element = `
-            //     No Contract Connected
-            // `;
-            // document.getElementById("connected-contract-p").innerHTML = element;
         }
     } else {
         console.log("Ethereum object not found");
@@ -252,7 +225,8 @@ window.addEventListener("load", async () => {
         });
     }
 
-    const correctNetwork = "137"
+    // configure correct network as needed
+    const correctNetwork = "80001"
 
     // check network and account
     await checkNetwork(correctNetwork);
