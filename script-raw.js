@@ -1,30 +1,30 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("You ran an external JS file v1.02.01");
+console.log("You ran an external JS file v1.02.02");
 
 /* Functions Start */
-const alertNetwork = (networkId, correctNetworkId) => {
-    const networks = {
-        1: "Ethereum Mainnet",
-        3: "Ropsten",
-        4: "Rinkeby",
-        5: "Goerli",
-        137: "Matic Mainnet",
-        80001: "Mumbai",
-    };
+// const alertNetwork = (networkId, correctNetworkId) => {
+//     const networks = {
+//         1: "Ethereum Mainnet",
+//         3: "Ropsten",
+//         4: "Rinkeby",
+//         5: "Goerli",
+//         137: "Matic Mainnet",
+//         80001: "Mumbai",
+//     };
 
-    if (networkId === correctNetworkId) {
-        console.log(
-            "You are connected to the right network:",
-            networks[network]
-        );
-    } else {
-        alert(
-            `You are connected to the wrong network - ${networks[network]}.\n Please connect to the right network: ${networks[correctNetworkId]}`
-        );
-    }
-};
+//     if (networkId === correctNetworkId) {
+//         console.log(
+//             "You are connected to the right network:",
+//             networks[network]
+//         );
+//     } else {
+//         alert(
+//             `You are connected to the wrong network - ${networks[network]}.\n Please connect to the right network: ${networks[correctNetworkId]}`
+//         );
+//     }
+// };
 
 const checkNetwork = async (correctNetworkId) => {
     try {
@@ -195,19 +195,34 @@ const disableMintButton = (label) => {
 };
 
 const attachMintListener = (mintPaused, correctNetwork, account) => {
-    if (mintPaused) {
-        // Disable the mint button with paused
-        disableMintButton("Paused");
+    if (!account) {
+        // Disable mint button when no authorized account
+        disableMintButton("No Wallet Detected");
     } else if (window["network"] !== correctNetwork) {
         // Disable the mint button with incorrect network
         disableMintButton("Incorrect Network");
-    } else if (!account) {
-        // Disable mint button when no authorized account
-        disableMintButton("No Wallet Detected");
+    } else if (mintPaused) {
+        // Disable the mint button with paused
+        disableMintButton("Paused");
     } else {
         // Attach mint listener
         document.getElementById("mint-button").addEventListener("click", mint);
     }
+
+
+    // if (mintPaused) {
+    //     // Disable the mint button with paused
+    //     disableMintButton("Paused");
+    // } else if (window["network"] !== correctNetwork) {
+    //     // Disable the mint button with incorrect network
+    //     disableMintButton("Incorrect Network");
+    // } else if (!account) {
+    //     // Disable mint button when no authorized account
+    //     disableMintButton("No Wallet Detected");
+    // } else {
+    //     // Attach mint listener
+    //     document.getElementById("mint-button").addEventListener("click", mint);
+    // }
 };
 
 const getCorrectNetwork = () => {

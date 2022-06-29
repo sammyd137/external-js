@@ -18,6 +18,6 @@ git log -1
 // run all - copy paste whole chunk into terminal
 npx webpack ./script-raw.js -o ./dist/output/fixed-script
 git add .
-git commit -m "v1.02.01 - Single script with address parameter"
+git commit -m "v1.02.02 - Rearranged mint button labels"
 git push origin main 
 git log -1
