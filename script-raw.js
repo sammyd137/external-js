@@ -1,11 +1,7 @@
 const { ethers } = require("ethers");
-const {
-    ADDRESS,
-    ABI,
-} = require("./constants/emotionless-fusionfall-fanfiction");
+const { ABI } = require("./constants/fixed-constants");
 
-console.log("You ran an external JS file v1.01.19");
-console.log("Imported address:", ADDRESS);
+console.log("You ran an external JS file v1.02.01");
 
 /* Functions Start */
 const alertNetwork = (networkId, correctNetworkId) => {
@@ -37,7 +33,7 @@ const checkNetwork = async (correctNetworkId) => {
             console.log("Connected Network:", ethereum.networkVersion);
             window["network"] = ethereum.networkVersion;
             // alert user if they are connected to the wrong network
-            alertNetwork(window["network"], correctNetworkId);
+            // alertNetwork(window["network"], correctNetworkId);
         }
     } catch (error) {
         console.log(error);
@@ -100,13 +96,13 @@ const attachConnectWalletButton = () => {
         .addEventListener("click", connectWallet);
 };
 
-const connectContract = async () => {
+const connectContract = async (contractAddress) => {
     const { ethereum } = window;
     if (ethereum) {
         if (window["account"]) {
             const provider = new ethers.providers.Web3Provider(ethereum);
             const signer = provider.getSigner();
-            const mintingContract = new ethers.Contract(ADDRESS, ABI, signer);
+            const mintingContract = new ethers.Contract(contractAddress, ABI, signer);
             console.log("Connected to contract:", mintingContract.address);
             window["contract"] = mintingContract;
         } else {
@@ -196,12 +192,12 @@ const disableMintButton = (label) => {
     mintButton.classList.remove("has-vivid-green-cyan-color");
     mintButton.classList.add("has-cyan-bluish-gray-color");
     mintButton.innerHTML = label;
-}
+};
 
 const attachMintListener = (mintPaused, correctNetwork, account) => {
     if (mintPaused) {
         // Disable the mint button with paused
-        disableMintButton("Paused")
+        disableMintButton("Paused");
     } else if (window["network"] !== correctNetwork) {
         // Disable the mint button with incorrect network
         disableMintButton("Incorrect Network");
@@ -213,6 +209,23 @@ const attachMintListener = (mintPaused, correctNetwork, account) => {
         document.getElementById("mint-button").addEventListener("click", mint);
     }
 };
+
+const getCorrectNetwork = () => {
+    const networkName = document.getElementById("networkName").innerHTML;
+    const networks = {
+        "Ethereum": "1",
+        "Ropsten": "3",
+        "Rinkeby": "4",
+        "Goerli": "5",
+        "Polygon": "137",
+        "Mumbai": "80001",
+    };
+    return networks[networkName]
+}
+
+const getContractAddress = () => {
+    return document.getElementById("contractAddress").innerHTML;
+}
 /* Functions End */
 
 /* Event Listeners Start */
@@ -229,7 +242,10 @@ window.addEventListener("load", async () => {
     }
 
     // configure correct network as needed
-    const correctNetwork = "80001";
+    const correctNetwork = getCorrectNetwork() // "80001";
+
+    // get contract address
+    const contractAddress = getContractAddress()
 
     // check network and account
     await checkNetwork(correctNetwork);
@@ -244,7 +260,7 @@ window.addEventListener("load", async () => {
     // attach contract details to mint section
     if (window["account"] && window["network"] === correctNetwork) {
         // connect to contract
-        await connectContract();
+        await connectContract(contractAddress);
 
         // get contract details
         await getTotalMinted();

@@ -16,8 +16,8 @@ git log -1
 
 
 // run all - copy paste whole chunk into terminal
-npx webpack ./script-raw.js -o ./dist/output/emotionless-fusionfall-fanfiction
+npx webpack ./script-raw.js -o ./dist/output/fixed-script
 git add .
-git commit -m "v1.01.19 - Disable mint and input if no wallet connected"
+git commit -m "v1.02.01 - Single script with address parameter"
 git push origin main 
 git log -1
