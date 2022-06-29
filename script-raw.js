@@ -1,7 +1,10 @@
 const { ethers } = require("ethers");
-const { ADDRESS, ABI } = require("./constants/emotionless-fusionfall-fanfiction");
+const {
+    ADDRESS,
+    ABI,
+} = require("./constants/emotionless-fusionfall-fanfiction");
 
-console.log("You ran an external JS file v1.01.18");
+console.log("You ran an external JS file v1.01.19");
 console.log("Imported address:", ADDRESS);
 
 /* Functions Start */
@@ -12,7 +15,7 @@ const alertNetwork = (networkId, correctNetworkId) => {
         4: "Rinkeby",
         5: "Goerli",
         137: "Matic Mainnet",
-        80001: "Mumbai"
+        80001: "Mumbai",
     };
 
     if (networkId === correctNetworkId) {
@@ -67,10 +70,6 @@ const checkConnection = async () => {
         } else {
             console.log("No authorized account found");
             window["account"] = null;
-            const element = `
-                No Wallet Connected 
-            `;
-            // document.getElementById("connected-wallet-div").innerHTML = element;
         }
     } catch (error) {
         console.log(error);
@@ -156,8 +155,8 @@ const updateAmt = (event) => {
     window["amount"] = parseInt(event.target.value);
 };
 
-const attachInputListener = (mintPaused, correctNetwork) => {
-    if (mintPaused || window["network"] !== correctNetwork) {
+const attachInputListener = (mintPaused, correctNetwork, account) => {
+    if (mintPaused || window["network"] !== correctNetwork || !account) {
         document.getElementById("mint-amount-input").disabled = true;
     } else {
         document
@@ -192,19 +191,23 @@ const mint = async () => {
     }
 };
 
-const attachMintListener = (mintPaused, correctNetwork) => {
+const disableMintButton = (label) => {
+    let mintButton = document.getElementById("mint-button").firstChild;
+    mintButton.classList.remove("has-vivid-green-cyan-color");
+    mintButton.classList.add("has-cyan-bluish-gray-color");
+    mintButton.innerHTML = label;
+}
+
+const attachMintListener = (mintPaused, correctNetwork, account) => {
     if (mintPaused) {
         // Disable the mint button with paused
-        let mintButton = document.getElementById("mint-button").firstChild
-        mintButton.classList.remove("has-vivid-green-cyan-color");
-        mintButton.classList.add("has-cyan-bluish-gray-color");
-        mintButton.innerHTML = "Paused";
+        disableMintButton("Paused")
     } else if (window["network"] !== correctNetwork) {
         // Disable the mint button with incorrect network
-        let mintButton = document.getElementById("mint-button").firstChild
-        mintButton.classList.remove("has-vivid-green-cyan-color");
-        mintButton.classList.add("has-cyan-bluish-gray-color");
-        mintButton.innerHTML = "Incorrect Network";
+        disableMintButton("Incorrect Network");
+    } else if (!account) {
+        // Disable mint button when no authorized account
+        disableMintButton("No Wallet Detected");
     } else {
         // Attach mint listener
         document.getElementById("mint-button").addEventListener("click", mint);
@@ -226,7 +229,7 @@ window.addEventListener("load", async () => {
     }
 
     // configure correct network as needed
-    const correctNetwork = "80001"
+    const correctNetwork = "80001";
 
     // check network and account
     await checkNetwork(correctNetwork);
@@ -237,9 +240,9 @@ window.addEventListener("load", async () => {
         console.log("Attaching connect wallet function...");
         attachConnectWalletButton();
     }
-    
+
     // attach contract details to mint section
-    if (window["network"] === correctNetwork) {
+    if (window["account"] && window["network"] === correctNetwork) {
         // connect to contract
         await connectContract();
 
@@ -249,13 +252,12 @@ window.addEventListener("load", async () => {
         await getCost();
         await getMaxMintAmount();
         await getPaused();
-
     }
     // add event listener to the input section
-    attachInputListener(window["paused"], correctNetwork);
+    attachInputListener(window["paused"], correctNetwork, window["account"]);
 
     // add event listener to mint button
-    attachMintListener(window["paused"], correctNetwork);
+    attachMintListener(window["paused"], correctNetwork, window["account"]);
 });
 
 /* Event Listeners End */
