@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.05 - Tidying up the price column");
+console.log("v1.03.06 - Adding the quantity column");
 
 /* Functions Start */
 /*const alertNetwork = (networkId, correctNetworkId) => {
@@ -297,7 +297,6 @@ window.addEventListener("load", async () => {
     priceCol.classList.add("is-vertically-aligned-center");
     const priceColP = document.createElement("p");
     priceColP.classList.add("has-text-align-center");
-    // priceColP.classList.add("has-small-font-size");
     priceColP.setAttribute("style", "font-size:16px");
     const priceColPStrong = document.createElement("strong");
     priceColPStrong.innerHTML = "Price";
@@ -306,12 +305,36 @@ window.addEventListener("load", async () => {
     priceColPText.setAttribute("id", "mint-cost");
     priceColPText.innerHTML = window["cost"] + " MATIC"
 
-    // priceColPBr.insertAdjacentElement("afterend", priceColPText);
     priceColP.appendChild(priceColPStrong);
     priceColP.appendChild(priceColPBr);
     priceColP.appendChild(priceColPText);
     priceCol.appendChild(priceColP);
+    
+    // column 2
+    const qtyCol = document.createElement("div");
+    qtyCol.classList.add("wp-container-5");
+    qtyCol.classList.add("wp-block-column");
+    qtyCol.classList.add("is-vertically-aligned-center");
+    const qtyColP = document.createElement("p");
+    qtyColP.classList.add("has-text-align-center");
+    qtyColP.setAttribute("style", "font-size:16px");
+    const qtyColPStrong = document.createElement("strong");
+    qtyColPStrong.innerHTML = "Quantity";
+    const qtyColPBr = document.createElement("br");
+    const qtyColPInput = document.createElement("input");
+    qtyColPInput.setAttribute("type", "number");
+    qtyColPInput.setAttribute("style", "width:70px; padding:5px");
+    qtyColPInput.setAttribute("id", "mint-amount-input");
+    qtyColPInput.setAttribute("min", "1");
+    qtyColPInput.setAttribute("max", "10");
+
+    qtyColP.appendChild(qtyColPStrong);
+    qtyColP.appendChild(qtyColPBr);
+    qtyColP.appendChild(qtyColPInput);
+    qtyCol.appendChild(qtyColP);
+
     column.appendChild(priceCol);
+    column.appendChild(qtyCol);
 
     const spacer = document.getElementById("second-spacer");
     spacer.insertAdjacentElement("afterend", column);
