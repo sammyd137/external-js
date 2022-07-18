@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.07 - Adding the mint column");
+console.log("v1.03.08 - Rendering after wallet connect");
 
 /* Functions Start */
 /*const alertNetwork = (networkId, correctNetworkId) => {
@@ -234,56 +234,8 @@ const getCorrectNetwork = () => {
 const getContractAddress = () => {
     return document.getElementById("contractAddress").innerHTML;
 };
-/* Functions End */
 
-/* Event Listeners Start */
-window.addEventListener("load", async () => {
-    // reload page on account / network change
-    const { ethereum } = window;
-    if (ethereum) {
-        ethereum.on("chainChanged", () => {
-            window.location.reload();
-        });
-        ethereum.on("accountsChanged", () => {
-            window.location.reload();
-        });
-    }
-
-    // configure correct network as needed
-    const correctNetwork = getCorrectNetwork(); // "80001";
-
-    // get contract address
-    const contractAddress = getContractAddress();
-
-    // check network and account
-    await checkNetwork(correctNetwork);
-    await checkConnection();
-
-    // attach function to connect wallet button
-    if (!window["account"]) {
-        console.log("Attaching connect wallet function...");
-        attachConnectWalletButton();
-    }
-
-    // attach contract details to mint section
-    if (window["account"] && window["network"] === correctNetwork) {
-        // connect to contract
-        await connectContract(contractAddress);
-
-        // get contract details
-        await getTotalMinted();
-        await getTotalSupply();
-        await getCost();
-        await getMaxMintAmount();
-        await getPaused();
-    }
-    // add event listener to the input section
-    attachInputListener(window["paused"], correctNetwork, window["account"]);
-
-    // add event listener to mint button
-    attachMintListener(window["paused"], correctNetwork, window["account"]);
-
-    // dynamic mint section testing
+const renderMintSection = () => {
     // column
     const column = document.createElement("div");
     column.classList.add("wp-container-8");
@@ -364,6 +316,59 @@ window.addEventListener("load", async () => {
 
     const spacer = document.getElementById("second-spacer");
     spacer.insertAdjacentElement("afterend", column);
+}
+/* Functions End */
+
+/* Event Listeners Start */
+window.addEventListener("load", async () => {
+    // reload page on account / network change
+    const { ethereum } = window;
+    if (ethereum) {
+        ethereum.on("chainChanged", () => {
+            window.location.reload();
+        });
+        ethereum.on("accountsChanged", () => {
+            window.location.reload();
+        });
+    }
+
+    // configure correct network as needed
+    const correctNetwork = getCorrectNetwork(); // "80001";
+
+    // get contract address
+    const contractAddress = getContractAddress();
+
+    // check network and account
+    await checkNetwork(correctNetwork);
+    await checkConnection();
+
+    // attach function to connect wallet button
+    if (!window["account"]) {
+        console.log("Attaching connect wallet function...");
+        attachConnectWalletButton();
+    }
+
+    // attach contract details to mint section
+    if (window["account"] && window["network"] === correctNetwork) {
+        // connect to contract
+        await connectContract(contractAddress);
+
+        // render mint section (test)
+        renderMintSection();
+
+        // get contract details
+        await getTotalMinted();
+        await getTotalSupply();
+        await getCost();
+        await getMaxMintAmount();
+        await getPaused();
+    }
+    // add event listener to the input section
+    attachInputListener(window["paused"], correctNetwork, window["account"]);
+
+    // add event listener to mint button
+    attachMintListener(window["paused"], correctNetwork, window["account"]);
+    
 });
 
 /* Event Listeners End */
