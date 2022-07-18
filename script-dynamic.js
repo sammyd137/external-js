@@ -305,8 +305,8 @@ window.addEventListener("load", async () => {
     priceColPText.setAttribute("id", "mint-cost");
     priceColPText.innerHTML = window["cost"]
 
-    priceColPBr.insertAdjacentElement("afterend", priceColPText);
     priceColPStrong.insertAdjacentElement("afterend", priceColPBr);
+    priceColPBr.insertAdjacentElement("afterend", priceColPText);
     priceColP.appendChild(priceColPStrong);
     priceCol.appendChild(priceColP);
     column.appendChild(priceCol);
