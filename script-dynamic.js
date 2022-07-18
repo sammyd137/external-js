@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.06 - Adding the quantity column");
+console.log("v1.03.07 - Adding the mint column");
 
 /* Functions Start */
 /*const alertNetwork = (networkId, correctNetworkId) => {
@@ -290,7 +290,7 @@ window.addEventListener("load", async () => {
     column.classList.add("wp-block-columns");
     column.classList.add("are-vertically-aligned-center");
 
-    // column 1
+    // price column
     const priceCol = document.createElement("div");
     priceCol.classList.add("wp-container-4");
     priceCol.classList.add("wp-block-column");
@@ -303,14 +303,13 @@ window.addEventListener("load", async () => {
     const priceColPBr = document.createElement("br");
     const priceColPText = document.createElement("text");
     priceColPText.setAttribute("id", "mint-cost");
-    priceColPText.innerHTML = window["cost"] + " MATIC"
-
+    priceColPText.innerHTML = window["cost"] + " MATIC";
     priceColP.appendChild(priceColPStrong);
     priceColP.appendChild(priceColPBr);
     priceColP.appendChild(priceColPText);
     priceCol.appendChild(priceColP);
-    
-    // column 2
+
+    // quantity column
     const qtyCol = document.createElement("div");
     qtyCol.classList.add("wp-container-5");
     qtyCol.classList.add("wp-block-column");
@@ -327,14 +326,41 @@ window.addEventListener("load", async () => {
     qtyColPInput.setAttribute("id", "mint-amount-input");
     qtyColPInput.setAttribute("min", "1");
     qtyColPInput.setAttribute("max", "10");
-
     qtyColP.appendChild(qtyColPStrong);
     qtyColP.appendChild(qtyColPBr);
     qtyColP.appendChild(qtyColPInput);
     qtyCol.appendChild(qtyColP);
 
+    // mint column
+    const mintCol = document.createElement("div");
+    mintCol.classList.add("wp-container-7");
+    mintCol.classList.add("wp-block-column");
+    mintCol.classList.add("is-vertically-aligned-center");
+    const mintColDiv1 = document.createElement("div");
+    mintColDiv1.classList.add("wp-container-6");
+    mintColDiv1.classList.add("wp-block-buttons");
+    const mintColDiv2 = document.createElement("div");
+    mintColDiv2.classList.add("wp-block-button");
+    mintColDiv2.classList.add("aligncenter");
+    mintColDiv2.classList.add("has-custom-font-size");
+    mintColDiv2.classList.add("is-style-outline");
+    mintColDiv2.setAttribute("id", "mint-button");
+    mintColDiv2.setAttribute("style", "font-size:16px");
+    const mintColDiv2a = document.createElement("a");
+    mintColDiv2a.classList.add("wp-block-button__link");
+    mintColDiv2a.classList.add("has-text-color");
+    mintColDiv2a.classList.add("has-background");
+    mintColDiv2a.classList.add("has-cyan-bluish-gray-color");
+    mintColDiv2a.setAttribute("style", "background-color:#ffffff00");
+    mintColDiv2a.innerHTML = "Sold Out"
+
+    mintColDiv2.appendChild(mintColDiv2a);
+    mintColDiv1.appendChild(mintColDiv2);
+    mintCol.appendChild(mintColDiv1);
+
     column.appendChild(priceCol);
     column.appendChild(qtyCol);
+    column.appendChild(mintCol);
 
     const spacer = document.getElementById("second-spacer");
     spacer.insertAdjacentElement("afterend", column);
