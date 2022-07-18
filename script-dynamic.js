@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("You ran DYNAMIC JS file v1.03.01");
+console.log("You ran DYNAMIC JS file v1.03.02");
 
 /* Functions Start */
 /*const alertNetwork = (networkId, correctNetworkId) => {
@@ -280,10 +280,11 @@ window.addEventListener("load", async () => {
     attachMintListener(window["paused"], correctNetwork, window["account"]);
 
     // testing
-    const div = document.createElement("div");
-    div.innerHTML = "This is a div"
-    const column = document.getElementById("second-spacer");
-    column.insertAdjacentElement("afterend", div)
+    const column = document.createElement("div");
+    column.classList.add("wp-container-8")
+    column.classList.add("wp-block-columns are-vertically-aligned-center")
+    const spacer = document.getElementById("second-spacer");
+    spacer.insertAdjacentElement("afterend", column)
 
 });
 
