@@ -280,7 +280,8 @@ window.addEventListener("load", async () => {
     attachMintListener(window["paused"], correctNetwork, window["account"]);
 
     // testing
-    const div = <div>This is a div</div>
+    const div = document.createElement("div");
+    div.innerHTML = "This is a div"
     const column = document.getElementById("second-spacer");
     column.insertAdjacentElement("afterend", div)
 
