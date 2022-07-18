@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.04 - Fixing the first column");
+console.log("v1.03.05 - Tidying up the price column");
 
 /* Functions Start */
 /*const alertNetwork = (networkId, correctNetworkId) => {
@@ -297,13 +297,14 @@ window.addEventListener("load", async () => {
     priceCol.classList.add("is-vertically-aligned-center");
     const priceColP = document.createElement("p");
     priceColP.classList.add("has-text-align-center");
-    priceColP.classList.add("has-small-font-size");
+    // priceColP.classList.add("has-small-font-size");
+    priceColP.setAttribute("style", "font-size:16px");
     const priceColPStrong = document.createElement("strong");
     priceColPStrong.innerHTML = "Price";
     const priceColPBr = document.createElement("br");
     const priceColPText = document.createElement("text");
     priceColPText.setAttribute("id", "mint-cost");
-    priceColPText.innerHTML = window["cost"]
+    priceColPText.innerHTML = window["cost"] + " MATIC"
 
     // priceColPBr.insertAdjacentElement("afterend", priceColPText);
     priceColP.appendChild(priceColPStrong);
