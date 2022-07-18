@@ -238,13 +238,13 @@ const getContractAddress = () => {
 const renderMintSection = () => {
     // column
     const column = document.createElement("div");
-    column.classList.add("wp-container-7");
+    column.classList.add("wp-container-10");
     column.classList.add("wp-block-columns");
     column.classList.add("are-vertically-aligned-center");
 
     // price column
     const priceCol = document.createElement("div");
-    priceCol.classList.add("wp-container-4");
+    priceCol.classList.add("wp-container-9");
     priceCol.classList.add("wp-block-column");
     priceCol.classList.add("is-vertically-aligned-center");
     const priceColP = document.createElement("p");
@@ -263,7 +263,7 @@ const renderMintSection = () => {
 
     // quantity column
     const qtyCol = document.createElement("div");
-    qtyCol.classList.add("wp-container-5");
+    qtyCol.classList.add("wp-container-8");
     qtyCol.classList.add("wp-block-column");
     qtyCol.classList.add("is-vertically-aligned-center");
     const qtyColP = document.createElement("p");
@@ -285,7 +285,7 @@ const renderMintSection = () => {
 
     // mint column
     const mintCol = document.createElement("div");
-    mintCol.classList.add("wp-container-6");
+    mintCol.classList.add("wp-container-7");
     mintCol.classList.add("wp-block-column");
     mintCol.classList.add("is-vertically-aligned-center");
     const mintColDiv1 = document.createElement("div");
