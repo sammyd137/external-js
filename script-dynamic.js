@@ -138,7 +138,7 @@ const getCost = async () => {
 const getMaxMintAmount = async () => {
     const _maxMint = await window["contract"].maxMintAmount();
     window["maxMint"] = _maxMint.toNumber();
-    document.getElementById("max-mint").innerHTML = window["maxMint"];
+    // document.getElementById("max-mint").innerHTML = window["maxMint"];
 };
 
 const getPaused = async () => {
