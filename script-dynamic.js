@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.03 - Adding the first column");
+console.log("v1.03.04 - Fixing the first column");
 
 /* Functions Start */
 /*const alertNetwork = (networkId, correctNetworkId) => {
@@ -305,9 +305,10 @@ window.addEventListener("load", async () => {
     priceColPText.setAttribute("id", "mint-cost");
     priceColPText.innerHTML = window["cost"]
 
-    priceColPStrong.insertAdjacentElement("afterend", priceColPBr);
-    priceColPBr.insertAdjacentElement("afterend", priceColPText);
+    // priceColPBr.insertAdjacentElement("afterend", priceColPText);
     priceColP.appendChild(priceColPStrong);
+    priceColP.appendChild(priceColPBr);
+    priceColP.appendChild(priceColPText);
     priceCol.appendChild(priceColP);
     column.appendChild(priceCol);
 
