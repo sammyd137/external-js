@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("You ran DYNAMIC JS file v1.03.02");
+console.log("v1.03.02 - Adding classes to elements");
 
 /* Functions Start */
 /*const alertNetwork = (networkId, correctNetworkId) => {
@@ -282,7 +282,8 @@ window.addEventListener("load", async () => {
     // testing
     const column = document.createElement("div");
     column.classList.add("wp-container-8")
-    column.classList.add("wp-block-columns are-vertically-aligned-center")
+    column.classList.add("wp-block-columns")
+    column.classList.add("are-vertically-aligned-center")
     const spacer = document.getElementById("second-spacer");
     spacer.insertAdjacentElement("afterend", column)
 
