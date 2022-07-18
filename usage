@@ -16,7 +16,7 @@ git log -1
 
 
 // run all - copy paste whole chunk into terminal
-npx webpack ./script-raw.js -o ./dist/output/fixed-script
+npx webpack ./script-dynamic.js -o ./dist/output/fixed-script-dynamic
 git add .
 git commit -m "v1.02.03 - Disable mint button when sold out"
 git push origin main 
