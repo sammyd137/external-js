@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.02 - Adding classes to elements");
+console.log("v1.03.03 - Adding the first column");
 
 /* Functions Start */
 /*const alertNetwork = (networkId, correctNetworkId) => {
@@ -102,7 +102,11 @@ const connectContract = async (contractAddress) => {
         if (window["account"]) {
             const provider = new ethers.providers.Web3Provider(ethereum);
             const signer = provider.getSigner();
-            const mintingContract = new ethers.Contract(contractAddress, ABI, signer);
+            const mintingContract = new ethers.Contract(
+                contractAddress,
+                ABI,
+                signer
+            );
             console.log("Connected to contract:", mintingContract.address);
             window["contract"] = mintingContract;
         } else {
@@ -217,19 +221,19 @@ const attachMintListener = (mintPaused, correctNetwork, account) => {
 const getCorrectNetwork = () => {
     const networkName = document.getElementById("networkName").innerHTML;
     const networks = {
-        "Ethereum": "1",
-        "Ropsten": "3",
-        "Rinkeby": "4",
-        "Goerli": "5",
-        "Polygon": "137",
-        "Mumbai": "80001",
+        Ethereum: "1",
+        Ropsten: "3",
+        Rinkeby: "4",
+        Goerli: "5",
+        Polygon: "137",
+        Mumbai: "80001",
     };
-    return networks[networkName]
-}
+    return networks[networkName];
+};
 
 const getContractAddress = () => {
     return document.getElementById("contractAddress").innerHTML;
-}
+};
 /* Functions End */
 
 /* Event Listeners Start */
@@ -246,10 +250,10 @@ window.addEventListener("load", async () => {
     }
 
     // configure correct network as needed
-    const correctNetwork = getCorrectNetwork() // "80001";
+    const correctNetwork = getCorrectNetwork(); // "80001";
 
     // get contract address
-    const contractAddress = getContractAddress()
+    const contractAddress = getContractAddress();
 
     // check network and account
     await checkNetwork(correctNetwork);
@@ -279,21 +283,42 @@ window.addEventListener("load", async () => {
     // add event listener to mint button
     attachMintListener(window["paused"], correctNetwork, window["account"]);
 
-    // testing
+    // dynamic mint section testing
+    // column
     const column = document.createElement("div");
-    column.classList.add("wp-container-8")
-    column.classList.add("wp-block-columns")
-    column.classList.add("are-vertically-aligned-center")
-    const spacer = document.getElementById("second-spacer");
-    spacer.insertAdjacentElement("afterend", column)
+    column.classList.add("wp-container-8");
+    column.classList.add("wp-block-columns");
+    column.classList.add("are-vertically-aligned-center");
 
+    // column 1
+    const priceCol = document.createElement("div");
+    priceCol.classList.add("wp-container-4");
+    priceCol.classList.add("wp-block-column");
+    priceCol.classList.add("is-vertically-aligned-center");
+    const priceColP = document.createElement("p");
+    priceColP.classList.add("has-text-align-center");
+    priceColP.classList.add("has-small-font-size");
+    const priceColPStrong = document.createElement("strong");
+    priceColPStrong.innerHTML = "Price";
+    const priceColPBr = document.createElement("br");
+    const priceColPText = document.createElement("text");
+    priceColPText.setAttribute("id", "mint-cost");
+    priceColPText.innerHTML = window["cost"]
+
+    priceColPBr.insertAdjacentElement("afterend", priceColPText);
+    priceColPStrong.insertAdjacentElement("afterend", priceColPBr);
+    priceColP.appendChild(priceColPStrong);
+    priceCol.appendChild(priceColP);
+    column.appendChild(priceCol);
+
+    const spacer = document.getElementById("second-spacer");
+    spacer.insertAdjacentElement("afterend", column);
 });
 
 /* Event Listeners End */
 
-
-
-{/* <div class="wp-container-8 wp-block-columns are-vertically-aligned-center">
+{
+    /* <div class="wp-container-8 wp-block-columns are-vertically-aligned-center">
     
     <div class="wp-container-4 wp-block-column is-vertically-aligned-center">
         <p class="has-text-align-center has-small-font-size">
@@ -318,4 +343,5 @@ window.addEventListener("load", async () => {
             </div>
         </div>
     </div>
-</div> */}
+</div> */
+}
