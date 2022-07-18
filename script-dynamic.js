@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.08 - Rendering after wallet connect");
+console.log("v1.03.09 - Justify columns when rendering");
 
 /* Functions Start */
 /*const alertNetwork = (networkId, correctNetworkId) => {
@@ -132,7 +132,7 @@ const getTotalSupply = async () => {
 const getCost = async () => {
     const _cost = await window["contract"].cost();
     window["cost"] = ethers.utils.formatEther(_cost);
-    document.getElementById("mint-cost").innerHTML = window["cost"];
+    document.getElementById("mint-cost").innerHTML = window["cost"] + " MATIC";
 };
 
 const getMaxMintAmount = async () => {
@@ -238,7 +238,7 @@ const getContractAddress = () => {
 const renderMintSection = () => {
     // column
     const column = document.createElement("div");
-    column.classList.add("wp-container-8");
+    column.classList.add("wp-container-7");
     column.classList.add("wp-block-columns");
     column.classList.add("are-vertically-aligned-center");
 
@@ -285,7 +285,7 @@ const renderMintSection = () => {
 
     // mint column
     const mintCol = document.createElement("div");
-    mintCol.classList.add("wp-container-7");
+    mintCol.classList.add("wp-container-6");
     mintCol.classList.add("wp-block-column");
     mintCol.classList.add("is-vertically-aligned-center");
     const mintColDiv1 = document.createElement("div");
