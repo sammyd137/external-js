@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.22 - Mint message and button disable");
+console.log("v1.03.23 - Mint message and button disable on reject txn");
 
 /* Functions Start */
 const checkNetwork = async (correctNetworkId) => {
@@ -186,6 +186,11 @@ const mint = async () => {
         }
     } catch (error) {
         console.log("Minting erorr", error);
+        // enable mint button and remove message
+        mintMessage.innerHTML = ""
+        mintButton.classList.remove("has-cyan-bluish-gray-color");
+        mintButton.classList.add("has-vivid-green-cyan-color");
+        document.getElementById("mint-button").addEventListener("click", mint);
         alert("Minting erorr", error);
     }
 };
