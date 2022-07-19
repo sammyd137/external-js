@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.24 - Mint message font size");
+console.log("v1.03.25 - Mint button colors");
 
 /* Functions Start */
 const checkNetwork = async (correctNetworkId) => {
@@ -163,8 +163,8 @@ const mint = async () => {
             
             // disable mint button and display message
             mintMessage.innerHTML = "Your transaction is in progress, please check your MetaMask"
-            mintButton.classList.remove("has-vivid-green-cyan-color");
-            mintButton.classList.add("has-cyan-bluish-gray-color");
+            mintButton.classList.remove("has-vivid-green-cyan-background-color"); //fix
+            mintButton.classList.add("has-cyan-bluish-gray-background-color"); //fix
             document.getElementById("mint-button").removeEventListener("click", mint)
 
             // send txn
@@ -181,8 +181,8 @@ const mint = async () => {
 
             // enable mint button and remove message
             mintMessage.innerHTML = ""
-            mintButton.classList.remove("has-cyan-bluish-gray-color");
-            mintButton.classList.add("has-vivid-green-cyan-color");
+            mintButton.classList.remove("has-cyan-bluish-gray-background-color");//fix
+            mintButton.classList.add("has-vivid-green-cyan-background-color");//fix
             document.getElementById("mint-button").addEventListener("click", mint);
         }
     } catch (error) {
@@ -191,8 +191,8 @@ const mint = async () => {
         let mintMessage = document.getElementById("mint-message")
         let mintButton = document.getElementById("mint-button").firstChild;
         mintMessage.innerHTML = ""
-        mintButton.classList.remove("has-cyan-bluish-gray-color");
-        mintButton.classList.add("has-vivid-green-cyan-color");
+        mintButton.classList.remove("has-cyan-bluish-gray-background-color");//fix
+        mintButton.classList.add("has-vivid-green-cyan-background-color");//fix
         document.getElementById("mint-button").addEventListener("click", mint);
         alert("Oops, looks like you rejected the transaction or there was a minting error! Please try again.");
     }
@@ -200,8 +200,8 @@ const mint = async () => {
 
 const disableMintButton = (label) => {
     let mintButton = document.getElementById("mint-button").firstChild;
-    mintButton.classList.remove("has-vivid-green-cyan-color");
-    mintButton.classList.add("has-cyan-bluish-gray-color");
+    mintButton.classList.remove("has-vivid-green-cyan-background-color");//fix
+    mintButton.classList.add("has-cyan-bluish-gray-background-color");//fix
     mintButton.innerHTML = label;
 };
 
@@ -308,15 +308,15 @@ const renderMintSection = () => {
     mintColDiv2.classList.add("wp-block-button");
     mintColDiv2.classList.add("aligncenter");
     mintColDiv2.classList.add("has-custom-font-size");
-    mintColDiv2.classList.add("is-style-outline");
+    // mintColDiv2.classList.add("is-style-outline");
     mintColDiv2.setAttribute("id", "mint-button");
     mintColDiv2.setAttribute("style", "font-size:16px");
     const mintColDiv2a = document.createElement("a");
     mintColDiv2a.classList.add("wp-block-button__link");
-    mintColDiv2a.classList.add("has-text-color");
+    // mintColDiv2a.classList.add("has-text-color");
     mintColDiv2a.classList.add("has-background");
-    mintColDiv2a.classList.add("has-vivid-green-cyan-color");
-    mintColDiv2a.setAttribute("style", "background-color:#ffffff00");
+    mintColDiv2a.classList.add("has-vivid-green-cyan-background-color");//fix
+    mintColDiv2a.setAttribute("style", "border-radius: 15px");
     mintColDiv2a.innerHTML = "Buy";
 
     mintColDiv2.appendChild(mintColDiv2a);
