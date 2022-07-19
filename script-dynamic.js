@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.21 - Incorrect network cleanup");
+console.log("v1.03.22 - Mint message and button disable");
 
 /* Functions Start */
 const checkNetwork = async (correctNetworkId) => {
@@ -157,6 +157,16 @@ const mint = async () => {
 
         if (window["contract"]) {
             console.log(`Minting ${window["amount"]}`);
+            let mintMessage = document.getElementById("mint-message")
+            let mintButton = document.getElementById("mint-button").firstChild;
+            
+            // disable mint button and display message
+            mintMessage.innerHTML = "Your transaction is in progress, please check your MetaMask"
+            mintButton.classList.remove("has-vivid-green-cyan-color");
+            mintButton.classList.add("has-cyan-bluish-gray-color");
+            document.getElementById("mint-button").removeEventListener("click", mint)
+
+            // send txn
             const mintTxn = await window["contract"].mint(window["amount"], {
                 value: ethers.utils.parseEther(
                     (window["amount"] * parseFloat(window["cost"])).toString()
@@ -167,6 +177,12 @@ const mint = async () => {
             console.log("Mint transaction: ", mintTxn);
             await getTotalMinted();
             alert(`Congratulations! You just minted ${window["amount"]} NFTs`);
+
+            // enable mint button and remove message
+            mintMessage.innerHTML = ""
+            mintButton.classList.remove("has-cyan-bluish-gray-color");
+            mintButton.classList.add("has-vivid-green-cyan-color");
+            document.getElementById("mint-button").addEventListener("click", mint);
         }
     } catch (error) {
         console.log("Minting erorr", error);
