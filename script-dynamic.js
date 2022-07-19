@@ -1,31 +1,9 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.09 - Justify columns when rendering");
+console.log("v1.03.10 - Getting contract details from data");
 
 /* Functions Start */
-/*const alertNetwork = (networkId, correctNetworkId) => {
-    const networks = {
-        1: "Ethereum Mainnet",
-        3: "Ropsten",
-        4: "Rinkeby",
-        5: "Goerli",
-        137: "Matic Mainnet",
-        80001: "Mumbai",
-    };
-
-    if (networkId === correctNetworkId) {
-        console.log(
-            "You are connected to the right network:",
-            networks[network]
-        );
-    } else {
-        alert(
-            `You are connected to the wrong network - ${networks[network]}.\n Please connect to the right network: ${networks[correctNetworkId]}`
-        );
-    }
-};*/
-
 const checkNetwork = async (correctNetworkId) => {
     try {
         const { ethereum } = window;
@@ -219,7 +197,9 @@ const attachMintListener = (mintPaused, correctNetwork, account) => {
 };
 
 const getCorrectNetwork = () => {
-    const networkName = document.getElementById("networkName").innerHTML;
+    // const networkName = document.getElementById("networkName").innerHTML;
+    const contractDetails = document.getElementById("contract-details");
+    const network = contractDetails.dataset.network;
     const networks = {
         Ethereum: "1",
         Ropsten: "3",
@@ -228,11 +208,14 @@ const getCorrectNetwork = () => {
         Polygon: "137",
         Mumbai: "80001",
     };
-    return networks[networkName];
+    return networks[network];
 };
 
 const getContractAddress = () => {
-    return document.getElementById("contractAddress").innerHTML;
+    const contractDetails = document.getElementById("contract-details");
+    const address = contractDetails.dataset.address;
+    // return document.getElementById("contractAddress").innerHTML;
+    return address;
 };
 
 const renderMintSection = () => {
@@ -304,7 +287,7 @@ const renderMintSection = () => {
     mintColDiv2a.classList.add("has-background");
     mintColDiv2a.classList.add("has-cyan-bluish-gray-color");
     mintColDiv2a.setAttribute("style", "background-color:#ffffff00");
-    mintColDiv2a.innerHTML = "Sold Out"
+    mintColDiv2a.innerHTML = "Sold Out";
 
     mintColDiv2.appendChild(mintColDiv2a);
     mintColDiv1.appendChild(mintColDiv2);
@@ -316,7 +299,7 @@ const renderMintSection = () => {
 
     const spacer = document.getElementById("second-spacer");
     spacer.insertAdjacentElement("afterend", column);
-}
+};
 /* Functions End */
 
 /* Event Listeners Start */
@@ -368,7 +351,6 @@ window.addEventListener("load", async () => {
 
     // add event listener to mint button
     attachMintListener(window["paused"], correctNetwork, window["account"]);
-    
 });
 
 /* Event Listeners End */
