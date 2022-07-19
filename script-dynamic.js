@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.12 - Wallet button disable");
+console.log("v1.03.13 - Minor cleanup of price");
 
 /* Functions Start */
 const checkNetwork = async (correctNetworkId) => {
@@ -240,7 +240,7 @@ const renderMintSection = () => {
     const priceColPBr = document.createElement("br");
     const priceColPText = document.createElement("text");
     priceColPText.setAttribute("id", "mint-cost");
-    priceColPText.innerHTML = window["cost"] + " MATIC";
+    priceColPText.innerHTML = "- MATIC";
     priceColP.appendChild(priceColPStrong);
     priceColP.appendChild(priceColPBr);
     priceColP.appendChild(priceColPText);
