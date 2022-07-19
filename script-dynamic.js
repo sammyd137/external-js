@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.23 - Mint message and button disable on reject txn cleanup");
+console.log("v1.03.24 - Mint message font size");
 
 /* Functions Start */
 const checkNetwork = async (correctNetworkId) => {
@@ -158,7 +158,7 @@ const mint = async () => {
         if (window["contract"]) {
             console.log(`Minting ${window["amount"]}`);
             let mintMessage = document.getElementById("mint-message")
-            mintMessage.setAttribute("style", "color:red; font-size:16px;")
+            mintMessage.setAttribute("style", "color:red; font-size:13px;")
             let mintButton = document.getElementById("mint-button").firstChild;
             
             // disable mint button and display message
@@ -194,7 +194,7 @@ const mint = async () => {
         mintButton.classList.remove("has-cyan-bluish-gray-color");
         mintButton.classList.add("has-vivid-green-cyan-color");
         document.getElementById("mint-button").addEventListener("click", mint);
-        alert("Minting erorr", error);
+        alert("Oops, looks like you rejected the transaction or there was a minting error! Please try again.");
     }
 };
 
