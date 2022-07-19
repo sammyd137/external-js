@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.16 - Fix render");
+console.log("v1.03.17 - Fix mint button & available");
 
 /* Functions Start */
 const checkNetwork = async (correctNetworkId) => {
@@ -100,7 +100,7 @@ const connectContract = async (contractAddress) => {
 const getTotalMinted = async () => {
     const _totalMinted = await window["contract"].totalSupply();
     window["totalMinted"] = _totalMinted.toNumber();
-    document.getElementById("total-minted").innerHTML = window["totalMinted"];
+    document.getElementById("total-minted").innerHTML = window["totalSupply"] - window["totalMinted"];
 };
 
 const getTotalSupply = async () => {
@@ -224,13 +224,13 @@ const getContractAddress = () => {
 const renderMintSection = () => {
     // column
     const column = document.createElement("div");
-    column.classList.add("wp-container-10");
+    column.classList.add("wp-container-20");
     column.classList.add("wp-block-columns");
     column.classList.add("are-vertically-aligned-center");
 
     // price column
     const priceCol = document.createElement("div");
-    priceCol.classList.add("wp-container-9");
+    priceCol.classList.add("wp-container-19");
     priceCol.classList.add("wp-block-column");
     priceCol.classList.add("is-vertically-aligned-center");
     const priceColP = document.createElement("p");
@@ -249,7 +249,7 @@ const renderMintSection = () => {
 
     // quantity column
     const qtyCol = document.createElement("div");
-    qtyCol.classList.add("wp-container-8");
+    qtyCol.classList.add("wp-container-18");
     qtyCol.classList.add("wp-block-column");
     qtyCol.classList.add("is-vertically-aligned-center");
     const qtyColP = document.createElement("p");
@@ -271,11 +271,11 @@ const renderMintSection = () => {
 
     // mint column
     const mintCol = document.createElement("div");
-    mintCol.classList.add("wp-container-7");
+    mintCol.classList.add("wp-container-17");
     mintCol.classList.add("wp-block-column");
     mintCol.classList.add("is-vertically-aligned-center");
     const mintColDiv1 = document.createElement("div");
-    mintColDiv1.classList.add("wp-container-6");
+    mintColDiv1.classList.add("wp-container-16");
     mintColDiv1.classList.add("wp-block-buttons");
     const mintColDiv2 = document.createElement("div");
     mintColDiv2.classList.add("wp-block-button");
@@ -288,9 +288,9 @@ const renderMintSection = () => {
     mintColDiv2a.classList.add("wp-block-button__link");
     mintColDiv2a.classList.add("has-text-color");
     mintColDiv2a.classList.add("has-background");
-    mintColDiv2a.classList.add("has-cyan-bluish-gray-color");
+    mintColDiv2a.classList.add("has-vivid-green-cyan-color");
     mintColDiv2a.setAttribute("style", "background-color:#ffffff00");
-    mintColDiv2a.innerHTML = "Sold Out";
+    mintColDiv2a.innerHTML = "Buy";
 
     mintColDiv2.appendChild(mintColDiv2a);
     mintColDiv1.appendChild(mintColDiv2);
@@ -343,8 +343,8 @@ window.addEventListener("load", async () => {
         await connectContract(contractAddress);
 
         // get contract details
-        await getTotalMinted();
         await getTotalSupply();
+        await getTotalMinted();
         await getCost();
         await getMaxMintAmount();
         await getPaused();
