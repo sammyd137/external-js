@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.18 - Rearrange");
+console.log("v1.03.19 - Incorrect Network instructions");
 
 /* Functions Start */
 const checkNetwork = async (correctNetworkId) => {
@@ -41,7 +41,9 @@ const checkConnection = async () => {
             `;
             // document.getElementById("connect-wallet-button").innerHTML =
             //     element;
-            document.getElementById("connect-wallet-button").setAttribute("style", "display:none");
+            document
+                .getElementById("connect-wallet-button")
+                .setAttribute("style", "display:none");
             document.getElementById("connected-status").innerHTML = element;
         } else {
             console.log("No authorized account found");
@@ -100,7 +102,8 @@ const connectContract = async (contractAddress) => {
 const getTotalMinted = async () => {
     const _totalMinted = await window["contract"].totalSupply();
     window["totalMinted"] = _totalMinted.toNumber();
-    document.getElementById("total-minted").innerHTML = window["totalSupply"] - window["totalMinted"];
+    document.getElementById("total-minted").innerHTML =
+        window["totalSupply"] - window["totalMinted"];
 };
 
 const getTotalSupply = async () => {
@@ -188,7 +191,7 @@ const attachMintListener = (mintPaused, correctNetwork, account) => {
     if (!account) {
         disableMintButton("No Wallet Detected");
     } else if (window["network"] !== correctNetwork) {
-        disableMintButton("Incorrect Network");
+        disableMintButton("Buy");
     } else if (mintPaused) {
         disableMintButton("Paused");
     } else if (window["totalMinted"] === window["totalSupply"]) {
@@ -210,7 +213,7 @@ const getCorrectNetwork = () => {
         Polygon: "137",
         Mumbai: "80001",
     };
-    console.log("Correct Network:", networks[network])
+    console.log("Correct Network:", networks[network]);
     return networks[network];
 };
 
@@ -303,6 +306,14 @@ const renderMintSection = () => {
     const spacer = document.getElementById("second-spacer");
     spacer.insertAdjacentElement("afterend", column);
 };
+
+const switchNetworkInstructions = () => {
+    const contractDetails = document.getElementById("contract-details");
+    const network = contractDetails.dataset.network;
+    let supplyStatus = document.getElementById("supply-status");
+    supplyStatus.innerHTML = "Please connect to " + network;
+    supplyStatus.setAttribute("style", "font-color:red");
+};
 /* Functions End */
 
 /* Event Listeners Start */
@@ -335,27 +346,32 @@ window.addEventListener("load", async () => {
     } else {
         // render mint section
         renderMintSection();
-        
+
         // attach contract details to mint section
-        if (window["account"] && window["network"] === correctNetwork) {
+        if (window["network"] === correctNetwork) {
             // connect to contract
             await connectContract(contractAddress);
-    
+
             // get contract details
             await getTotalSupply();
             await getTotalMinted();
             await getCost();
             await getMaxMintAmount();
-            await getPaused();    
+            await getPaused();
+        } else {
+            switchNetworkInstructions();
         }
-    
+
         // add event listener to the input section
-        attachInputListener(window["paused"], correctNetwork, window["account"]);
-        
+        attachInputListener(
+            window["paused"],
+            correctNetwork,
+            window["account"]
+        );
+
         // add event listener to mint button
         attachMintListener(window["paused"], correctNetwork, window["account"]);
     }
-
 });
 
 /* Event Listeners End */
