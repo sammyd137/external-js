@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.10 - Getting contract details from data");
+console.log("v1.03.11 - Wallet connected status styling");
 
 /* Functions Start */
 const checkNetwork = async (correctNetworkId) => {
@@ -39,8 +39,9 @@ const checkConnection = async () => {
                 account.length
             )} Connected &#x1F44D
             `;
-            document.getElementById("connect-wallet-button").innerHTML =
-                element;
+            // document.getElementById("connect-wallet-button").innerHTML =
+            //     element;
+            document.getElementById("connected-status").innerHTML = element;
         } else {
             console.log("No authorized account found");
             window["account"] = null;
