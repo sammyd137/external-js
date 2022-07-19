@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.13 - Minor cleanup of price");
+console.log("v1.03.14 - Rearrange event listeners");
 
 /* Functions Start */
 const checkNetwork = async (correctNetworkId) => {
@@ -347,41 +347,13 @@ window.addEventListener("load", async () => {
         await getCost();
         await getMaxMintAmount();
         await getPaused();
+        
+        // add event listener to the input section
+        attachInputListener(window["paused"], correctNetwork, window["account"]);
+    
+        // add event listener to mint button
+        attachMintListener(window["paused"], correctNetwork, window["account"]);
     }
-    // add event listener to the input section
-    attachInputListener(window["paused"], correctNetwork, window["account"]);
-
-    // add event listener to mint button
-    attachMintListener(window["paused"], correctNetwork, window["account"]);
 });
 
 /* Event Listeners End */
-
-{
-    /* <div class="wp-container-8 wp-block-columns are-vertically-aligned-center">
-    
-    <div class="wp-container-4 wp-block-column is-vertically-aligned-center">
-        <p class="has-text-align-center has-small-font-size">
-            <strong>Price</strong>
-            <br/>
-            <text id="mint-cost">1.0</text>
-        </p>
-    </div>
-
-    <div class="wp-container-5 wp-block-column is-vertically-aligned-center">
-        <p class="has-text-align-center has-small-font-size">
-            <strong>Quantity</strong>
-            <br/>
-            <input type="number" style="width:70px; padding:5px" id="mint-amount-input" min="1" max="10"/>
-        </p>
-    </div>
-
-    <div class="wp-container-7 wp-block-column is-vertically-aligned-center">
-        <div class="wp-container-6 wp-block-buttons">
-            <div class="wp-block-button aligncenter is-style-outline" id="mint-button">
-                <a class="wp-block-button__link has-text-color has-background has-cyan-bluish-gray-color" style="background-color:#ffffff00">Sold out</a>
-            </div>
-        </div>
-    </div>
-</div> */
-}
