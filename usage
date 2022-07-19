@@ -18,6 +18,6 @@ git log -1
 // run all - copy paste whole chunk into terminal
 npx webpack ./script-dynamic.js -o ./dist/output/fixed-script-dynamic
 git add .
-git commit -m "v1.03.25 - Mint button colors"
+git commit -m "v1.03.26 - Mint button text white"
 git push origin main 
 git log -1

@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.25 - Mint button colors");
+console.log("v1.03.26 - Mint button text white");
 
 /* Functions Start */
 const checkNetwork = async (correctNetworkId) => {
@@ -313,7 +313,8 @@ const renderMintSection = () => {
     mintColDiv2.setAttribute("style", "font-size:16px");
     const mintColDiv2a = document.createElement("a");
     mintColDiv2a.classList.add("wp-block-button__link");
-    // mintColDiv2a.classList.add("has-text-color");
+    mintColDiv2a.classList.add("has-white-color");
+    mintColDiv2a.classList.add("has-text-color");
     mintColDiv2a.classList.add("has-background");
     mintColDiv2a.classList.add("has-vivid-green-cyan-background-color");//fix
     mintColDiv2a.setAttribute("style", "border-radius: 15px");
