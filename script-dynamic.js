@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.20 - Incorrect network font");
+console.log("v1.03.21 - Incorrect network cleanup");
 
 /* Functions Start */
 const checkNetwork = async (correctNetworkId) => {
@@ -311,7 +311,7 @@ const switchNetworkInstructions = () => {
     const contractDetails = document.getElementById("contract-details");
     const network = contractDetails.dataset.network;
     let supplyStatus = document.getElementById("supply-status");
-    supplyStatus.innerHTML = "Please connect to " + network;
+    supplyStatus.innerHTML = "Please connect to " + network + " network";
     supplyStatus.setAttribute("style", "background-color:#abb7c266;font-size:16px;margin-bottom:0px;border-radius: 0 0 15px 15px;color:red");
 };
 /* Functions End */
