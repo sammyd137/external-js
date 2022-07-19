@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.15 - Rearrange event listeners");
+console.log("v1.03.16 - Fix render");
 
 /* Functions Start */
 const checkNetwork = async (correctNetworkId) => {
@@ -332,15 +332,15 @@ window.addEventListener("load", async () => {
     if (!window["account"]) {
         console.log("Attaching connect wallet function...");
         attachConnectWalletButton();
+    } else {
+        // render mint section
+        renderMintSection();
     }
 
     // attach contract details to mint section
     if (window["account"] && window["network"] === correctNetwork) {
         // connect to contract
         await connectContract(contractAddress);
-
-        // render mint section
-        renderMintSection();
 
         // get contract details
         await getTotalMinted();
