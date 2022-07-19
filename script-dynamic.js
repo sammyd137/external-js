@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.17 - Fix mint button & available");
+console.log("v1.03.18 - Rearrange");
 
 /* Functions Start */
 const checkNetwork = async (correctNetworkId) => {
@@ -335,26 +335,27 @@ window.addEventListener("load", async () => {
     } else {
         // render mint section
         renderMintSection();
-    }
-
-    // attach contract details to mint section
-    if (window["account"] && window["network"] === correctNetwork) {
-        // connect to contract
-        await connectContract(contractAddress);
-
-        // get contract details
-        await getTotalSupply();
-        await getTotalMinted();
-        await getCost();
-        await getMaxMintAmount();
-        await getPaused();
         
+        // attach contract details to mint section
+        if (window["account"] && window["network"] === correctNetwork) {
+            // connect to contract
+            await connectContract(contractAddress);
+    
+            // get contract details
+            await getTotalSupply();
+            await getTotalMinted();
+            await getCost();
+            await getMaxMintAmount();
+            await getPaused();    
+        }
+    
         // add event listener to the input section
         attachInputListener(window["paused"], correctNetwork, window["account"]);
-    
+        
         // add event listener to mint button
         attachMintListener(window["paused"], correctNetwork, window["account"]);
     }
+
 });
 
 /* Event Listeners End */
