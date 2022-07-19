@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 const { ABI } = require("./constants/fixed-constants");
 
-console.log("v1.03.14 - Rearrange event listeners");
+console.log("v1.03.15 - Rearrange event listeners");
 
 /* Functions Start */
 const checkNetwork = async (correctNetworkId) => {
@@ -210,6 +210,7 @@ const getCorrectNetwork = () => {
         Polygon: "137",
         Mumbai: "80001",
     };
+    console.log("Correct Network:", networks[network])
     return networks[network];
 };
 
@@ -338,7 +339,7 @@ window.addEventListener("load", async () => {
         // connect to contract
         await connectContract(contractAddress);
 
-        // render mint section (test)
+        // render mint section
         renderMintSection();
 
         // get contract details
